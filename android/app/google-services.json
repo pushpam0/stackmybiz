@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "548622676323",
+    "project_id": "stackmybiz-1be29",
+    "storage_bucket": "stackmybiz-1be29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548622676323:android:8440dc3431a7974a58a356",
+        "android_client_info": {
+          "package_name": "com.example.stackmybiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548622676323-faehg8ob0ciekf0a036gn6pp1ccgkbmn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stackmybiz",
+            "certificate_hash": "284f884ef645596a92a3f3555e57de50aeb4a5f7"
+          }
+        },
+        {
+          "client_id": "548622676323-35n4ijg8ivdg7261tpt5bsmmqcr7283s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIxtVut7qJU0RlKlreFCKckQOop5k_xds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548622676323-35n4ijg8ivdg7261tpt5bsmmqcr7283s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

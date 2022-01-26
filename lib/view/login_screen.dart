@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stackmybiz/services/firebase_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -84,7 +85,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 10,
                         ),
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            FireBaseService().signInWithGmail(context);
+                          },
                           color: Colors.white,
                           child: const Text("Sign In With Google"),
                           padding: EdgeInsets.all(10),
@@ -116,5 +119,24 @@ class _LoginScreenState extends State<LoginScreen> {
         }),
       ),
     );
+  }
+
+  void showMessage(String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Error"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }
