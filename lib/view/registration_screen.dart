@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:stackmybiz/controller/event.dart';
 import 'package:stackmybiz/model/login_model.dart';
 import 'package:stackmybiz/services/firebase_services.dart';
-import 'package:stackmybiz/view/registration_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   late TextEditingController email;
   late TextEditingController password;
   @override
@@ -76,68 +75,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelText: "Password",
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Text(
-                              "Forgot Password?",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ),
+                        SizedBox(
+                          height: 10,
                         ),
                         MaterialButton(
                           onPressed: () {
-                            Event().login(
+                            Event().registration(
                                 LoginModel(
                                     email: email.text, password: password.text),
                                 context);
                           },
                           color: Colors.blue,
-                          child: const Text("Sign In"),
+                          child: const Text("Sign Up"),
                           padding: EdgeInsets.all(10),
                           minWidth: MediaQuery.of(context).size.width * 0.4,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        MaterialButton(
-                          onPressed: () {
-                            FireBaseService().signInWithGmail(context);
-                          },
-                          color: Colors.white,
-                          child: const Text("Sign In With Google"),
-                          padding: EdgeInsets.all(10),
-                          minWidth: MediaQuery.of(context).size.width * 0.4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegistrationScreen(),
-                              ),
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Don't have an account?"),
-                              Text(
-                                "Register",
-                                style: TextStyle(color: Colors.green),
-                              )
-                            ],
                           ),
                         ),
                       ],
