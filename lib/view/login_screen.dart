@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Event().googleLogin(context);
                           },
                           color: Colors.white,
-                          child: const Text("Sign In With Google"),
+                          child: const Text("Sign In With Gmail"),
                           padding: EdgeInsets.all(10),
                           minWidth: MediaQuery.of(context).size.width * 0.8,
                           shape: RoundedRectangleBorder(
