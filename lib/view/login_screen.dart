@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stackmybiz/controller/event.dart';
 import 'package:stackmybiz/model/login_model.dart';
+import 'package:stackmybiz/model/reg_exp.dart';
+import 'package:stackmybiz/provider/provider_model.dart';
 import 'package:stackmybiz/services/firebase_services.dart';
+import 'package:stackmybiz/view/forgot_password.dart';
 import 'package:stackmybiz/view/registration_screen.dart';
+
+import 'profile.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController email;
   late TextEditingController password;
+  String error = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -66,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelText: "Email Id",
                           ),
                         ),
+                        Text(error),
                         SizedBox(
                           height: 10,
                         ),
@@ -80,18 +88,67 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.all(10.0),
                           child: Align(
                             alignment: Alignment.topRight,
-                            child: Text(
-                              "Forgot Password?",
-                              style: TextStyle(color: Colors.red),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgotPasswordScreen()),
+                                );
+                              },
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: Colors.red),
+                              ),
                             ),
                           ),
                         ),
                         MaterialButton(
                           onPressed: () {
-                            Event().login(
-                                LoginModel(
-                                    email: email.text, password: password.text),
-                                context);
+                            if (CheckEmailFormat()
+                                .checkFormat(email.text.trim())) {
+                              Event().login(
+                                  LoginModel(
+                                      email: email.text.trim(),
+                                      password: password.text.trim()),
+                                  context);
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Consumer<ProviderModel>(
+                                        builder: (context, model, child) {
+                                      return AlertDialog(
+                                        title: Text("Message"),
+                                        content: (model.message == null)
+                                            ? CircularProgressIndicator()
+                                            : Text(model.message.toString()),
+                                        actions: [
+                                          TextButton(
+                                            child: Text("Ok"),
+                                            onPressed: () {
+                                              Provider.of<ProviderModel>(
+                                                      context,
+                                                      listen: false)
+                                                  .messageOnDilog(null);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ProfileScreen()),
+                                              );
+                                              // Navigator.of(context).pop();
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    });
+                                  });
+                            } else {
+                              setState(() {
+                                error = "email is not valid";
+                              });
+                            }
                           },
                           color: Colors.blue,
                           child: const Text("Sign In"),
@@ -106,7 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         MaterialButton(
                           onPressed: () {
-                            FireBaseService().signInWithGmail(context);
+                            //FireBaseService().signInWithGmail(context);
+                            Event().googleLogin(context);
                           },
                           color: Colors.white,
                           child: const Text("Sign In With Google"),
@@ -158,7 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Error"),
-            content: Text(message),
+            content: (message == "provided email or password incorrect")
+                ? Text(message)
+                : CircularProgressIndicator(),
             actions: [
               TextButton(
                 child: Text("Ok"),

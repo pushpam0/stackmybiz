@@ -4,25 +4,23 @@ import 'package:stackmybiz/controller/event.dart';
 import 'package:stackmybiz/model/login_model.dart';
 import 'package:stackmybiz/model/reg_exp.dart';
 import 'package:stackmybiz/provider/provider_model.dart';
-import 'package:stackmybiz/view/profile.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   late TextEditingController email;
-  late TextEditingController password;
+
   String error = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     email = TextEditingController();
-    password = TextEditingController();
   }
 
   @override
@@ -76,25 +74,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        TextField(
-                          controller: password,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Password",
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
                         MaterialButton(
                           onPressed: () {
                             if (CheckEmailFormat()
                                 .checkFormat(email.text.trim())) {
-                              Event().registration(
-                                  LoginModel(
-                                      email: email.text.trim(),
-                                      password: password.text.trim()),
-                                  context);
+                              Event().resetPassword(email.text.trim(), context);
 
                               showDialog(
                                   context: context,
@@ -116,13 +100,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                   .messageOnDilog(
                                                 null,
                                               );
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ProfileScreen()),
-                                              );
-                                              // Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
                                             },
                                           )
                                         ],
@@ -136,9 +114,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             }
                           },
                           color: Colors.blue,
-                          child: const Text("Sign Up"),
+                          child: const Text("Send reset link"),
                           padding: EdgeInsets.all(10),
-                          minWidth: MediaQuery.of(context).size.width * 0.4,
+                          minWidth: MediaQuery.of(context).size.width * 0.5,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),

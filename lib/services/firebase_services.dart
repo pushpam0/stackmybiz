@@ -20,7 +20,7 @@ class FireBaseService {
           await firebaseAuth.signInWithCredential(authCredential);
       User? user = result.user;
       if (result.user != null) {
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileScreen()));
       }
     } on FirebaseAuthException catch (e) {
