@@ -34,7 +34,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             alignment: Alignment.center,
             child: SizedBox(
               height: constraint.maxHeight,
-              child: Column(
+              child: ListView(
                 children: [
                   Container(
                     height: constraint.maxHeight * 0.2,
@@ -56,94 +56,96 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       )
                     ],
                   ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    height: constraint.maxHeight * 0.5,
-                    //  color: Colors.red[300],
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: email,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Email Id",
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      // height: constraint.maxHeight * 0.5,
+                      //  color: Colors.red[300],
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: email,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Email Id",
+                            ),
                           ),
-                        ),
-                        Text(
-                          error,
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextField(
-                          controller: password,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Password",
+                          Text(
+                            error,
+                            style: TextStyle(color: Colors.red),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        MaterialButton(
-                          onPressed: () {
-                            if (CheckEmailFormat()
-                                .checkFormat(email.text.trim())) {
-                              Event().registration(
-                                  LoginModel(
-                                      email: email.text.trim(),
-                                      password: password.text.trim()),
-                                  context);
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
+                            controller: password,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Password",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          MaterialButton(
+                            onPressed: () {
+                              if (CheckEmailFormat()
+                                  .checkFormat(email.text.trim())) {
+                                Event().registration(
+                                    LoginModel(
+                                        email: email.text.trim(),
+                                        password: password.text.trim()),
+                                    context);
 
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Consumer<ProviderModel>(
-                                        builder: (context, model, child) {
-                                      return AlertDialog(
-                                        title: Text("Message"),
-                                        content: (model.message == null)
-                                            ? CircularProgressIndicator()
-                                            : Text(model.message.toString()),
-                                        actions: [
-                                          TextButton(
-                                            child: Text("Ok"),
-                                            onPressed: () {
-                                              Provider.of<ProviderModel>(
-                                                      context,
-                                                      listen: false)
-                                                  .messageOnDilog(
-                                                null,
-                                              );
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ProfileScreen()),
-                                              );
-                                              // Navigator.of(context).pop();
-                                            },
-                                          )
-                                        ],
-                                      );
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Consumer<ProviderModel>(
+                                          builder: (context, model, child) {
+                                        return AlertDialog(
+                                          title: Text("Message"),
+                                          content: (model.message == null)
+                                              ? CircularProgressIndicator()
+                                              : Text(model.message.toString()),
+                                          actions: [
+                                            TextButton(
+                                              child: Text("Ok"),
+                                              onPressed: () {
+                                                Provider.of<ProviderModel>(
+                                                        context,
+                                                        listen: false)
+                                                    .messageOnDilog(
+                                                  null,
+                                                );
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const ProfileScreen()),
+                                                );
+                                                // Navigator.of(context).pop();
+                                              },
+                                            )
+                                          ],
+                                        );
+                                      });
                                     });
-                                  });
-                            } else {
-                              setState(() {
-                                error = "enter valid email";
-                              });
-                            }
-                          },
-                          color: Colors.blue,
-                          child: const Text("Sign Up"),
-                          padding: EdgeInsets.all(10),
-                          minWidth: MediaQuery.of(context).size.width * 0.4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                              } else {
+                                setState(() {
+                                  error = "enter valid email";
+                                });
+                              }
+                            },
+                            color: Colors.blue,
+                            child: const Text("Sign Up"),
+                            padding: EdgeInsets.all(10),
+                            minWidth: MediaQuery.of(context).size.width * 0.4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],

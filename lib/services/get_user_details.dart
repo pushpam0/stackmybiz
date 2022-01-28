@@ -4,7 +4,9 @@ import 'package:stackmybiz/model/profile_details_model.dart';
 class GetUserDetails {
   Future<ProfileDetailsModel> getUser() async {
     User? user = await FirebaseAuth.instance.currentUser;
+
     if (user != null) {
+      user.reload();
       print(
           "User Details :  --  :  ${user.email}, ${user.displayName}, ${user.photoURL}, ${user.emailVerified}");
       return ProfileDetailsModel(

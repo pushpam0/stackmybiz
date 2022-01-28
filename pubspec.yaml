@@ -38,6 +38,14 @@ dependencies:
   firebase_core:
   google_sign_in:
   provider:
+  geolocator: ^8.0.5
+  geocoding: ^2.0.2
+  cloud_firestore: ^3.1.7
+  
+
+  
+  
+  
 
 dev_dependencies:
   flutter_test:
